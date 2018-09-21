@@ -281,9 +281,10 @@
               for(let i=0;i<changedList.length;i++){
                 console.log(changedList[i].c_primaryKey)
                 let form_data = new FormData()
-                form_data.append('primaryKey',changedList[i].c_primaryKey)
+                form_data.append('VESSEL_PK1',changedList[i].c_primaryKey)
+                form_data.append('ID',changedList[i].c_id)
                 form_data.append(changedList[i].c_field,changedList[i].c_value)
-                global.$http.post('http://localhost:8888/nps-base/dataApi/delete_test_vessel',
+                global.$http.post('http://localhost:8888/nps-base/dataApi/update_test_vessel_test',
                   form_data
                   ,{'Content-Type':'Multipart/form-data'})
                   .then(
@@ -315,15 +316,16 @@
 //----------------------单元格编辑事件------------------------
       table.on('edit(test3)', function(obj){
         let value = obj.value //得到修改后的值
-          ,data = obj.data //得到所在行所有键值
+          ,data = obj.data //得到所在行所有值
           ,field = obj.field; //得到字段
         let changedData = {
           c_primaryKey:data.VESSEL_PK1,
           c_field:field,
-          c_value:value
+          c_value:value,
+          c_id:data.ID
         }
         changedList.push(changedData)
-        layer.msg('[VESSEL_PK1: '+ ata.VESSEL_PK1 +'] ' + field + ' 字段更改为：'+ value)
+        layer.msg('[VESSEL_PK1: '+ data.VESSEL_PK1 +'] ' + field + ' 字段更改为：'+ value)
         // layer.msg(changedData.c_primaryKey)
         // console.log(changedList)
       })
